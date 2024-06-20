@@ -1,0 +1,38 @@
+name: FGO版本码解析 - JP
+
+on:
+  push:
+    branches: [JP]
+  pull_request:
+    branches: [JP]
+  schedule:
+    - cron: "00 03 * * *"
+    - cron: "30 03 * * *"
+    - cron: "00 07 * * *"
+    - cron: "30 13 * * *"
+    - cron: "30 17 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - name: 安装运行库
+        run: pip install -r https://raw.githubusercontent.com/DNNDHH/FGO-VerCode-extractor/JP/requirements.txt
+
+      - name: 获得库文件
+        uses: actions/checkout@v2
+
+      - name: 解析APK
+        run: python3 main.py
+
+      - name: 提交更改
+        uses: actions-js/push@master
+        with:
+          force: true
+          branch: "JP"
+          github_token: ${{ secrets.TOKEN_REPO }}
