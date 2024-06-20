@@ -22,10 +22,10 @@ jobs:
 
     steps:
       - name: 安装运行库
-        run: pip install -r https://raw.githubusercontent.com/DNNDHH/FGO-VerCode-extractor/JP/requirements.txt
+        run: pip install -r https://raw.githubusercontent.com/xdeadboy666x/FGO-VerCode-extractor-JP/JP/requirements.txt
 
       - name: 获得库文件
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: 解析APK
         run: python3 main.py
