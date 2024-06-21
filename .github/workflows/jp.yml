@@ -1,16 +1,13 @@
-name: FGO版本码解析 - JP
+name: FGO Version Code Extraction - JP
 
 on:
   push:
-    branches: [JP]
+    branches: ["JP"]
   pull_request:
-    branches: [JP]
+    branches: ["JP"]
   schedule:
-    - cron: "00 03 * * *"
-    - cron: "30 03 * * *"
-    - cron: "00 07 * * *"
-    - cron: "30 13 * * *"
-    - cron: "30 17 * * *"
+    - cron: "15 04 * * *"
+    - cron: "15 16 * * *"
   workflow_dispatch:
 
 jobs:
@@ -18,19 +15,19 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: [3.12]
 
     steps:
-      - name: 安装运行库
-        run: pip install -r https://raw.githubusercontent.com/xdeadboy666x/FGO-VerCode-extractor-JP/JP/requirements.txt
-
-      - name: 获得库文件
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 解析APK
-        run: python3 main.py
+      - name: Install Requirements
+        run: pip install -r requirements.txt
 
-      - name: 提交更改
+      - name: Parse APK
+        run: python main.py
+
+      - name: Commit Changes
         uses: actions-js/push@master
         with:
           force: true
