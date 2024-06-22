@@ -18,18 +18,28 @@ jobs:
         python-version: [3.12]
 
     steps:
+      # Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Requirements
+      # Upgrade pip
+      - name: Upgrade pip
+        run: python.exe -m pip install --upgrade pip
+
+      # Install dependencies
+      - name: Install dependencies
         run: pip install -r requirements.txt
 
+
+      # Run the main script to parse APK
       - name: Parse APK
         run: python main.py
 
+      # Commit and push changes
       - name: Commit Changes
         uses: actions-js/push@master
         with:
           force: true
           branch: "JP"
           github_token: ${{ secrets.TOKEN_REPO }}
+          commit_message: "Automated commit: Update parsed APK data"
