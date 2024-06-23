@@ -1,10 +1,10 @@
-name: FGO Version Code Extraction - NA
+name: FGO Version Code Extraction - JP
 
 on:
   push:
-    branches: ["NA"]
+    branches: ["JP"]
   pull_request:
-    branches: ["NA"]
+    branches: ["JP"]
   schedule:
     - cron: "15 04 * * *"
     - cron: "15 16 * * *"
@@ -22,7 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: NA
+          ref: JP
 
 
       # Set up Python
@@ -47,6 +47,6 @@ jobs:
         uses: actions-js/push@master
         with:
           force: true
-          branch: "NA"
+          branch: "JP"
           github_token: ${{ secrets.TOKEN_REPO }}
           commit_message: "Automated commit: Update parsed APK data"
