@@ -22,14 +22,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Upgrade pip
-      - name: Upgrade pip
-        run: python.exe -m pip install --upgrade pip
-
-      # Install dependencies
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
+      # Update pip and install dependencies
+      - name: Update pip and install dependencies
+        run: pip install --upgrade pip && pip install -r requirements.txt
 
       # Run the main script to parse APK
       - name: Parse APK
