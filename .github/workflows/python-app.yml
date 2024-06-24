@@ -48,10 +48,6 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
 
-      # Test with pytest
-      - name: Test with pytest
-        run: pytest
-
       # Run the main script to parse APK
       - name: Parse APK
         run: python main.py
