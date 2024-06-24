@@ -1,0 +1,62 @@
+# This workflow will install Python dependencies, run tests, and run a main script with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python application
+
+on:
+  push:
+    branches: [ "JP" ]
+  pull_request:
+    branches: [ "JP" ]
+  schedule:
+    - cron: "15 04 * * *"
+    - cron: "15 16 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Cache pip dependencies
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Update pip and install dependencies
+      - name: Update pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      # Run the main script to parse APK
+      - name: Parse APK
+        run: python main.py
+
+      # Commit and push changes
+      - name: Commit Changes
+        uses: actions-js/push@master
+        with:
+          force: true
+          branch: "JP"
+          github_token: ${{ secrets.TOKEN_REPO }}
+          commit_message: "Automated commit: Update parsed APK data"
