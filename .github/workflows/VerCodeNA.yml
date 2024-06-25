@@ -55,10 +55,9 @@ jobs:
         run: python main.py
 
       # Commit and push changes
-      - name: Commit Changes
+      - name: Push changes
         uses: actions-js/push@master
         with:
           force: true
           branch: "NA"
           github_token: ${{ secrets.TOKEN_REPO }}
-          commit_message: "Automated commit: Update parsed APK data"
