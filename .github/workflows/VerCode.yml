@@ -1,15 +1,15 @@
 # This workflow will install Python dependencies, run tests, and run a main script with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Fate/Grand Order VerCode extractor
+name: Fate/Grand Order (JP) VerCode extractor
 
 on:
   push:
-    branches: 
+    branches:
       - "NA"
       - "JP"
   pull_request:
-    branches: 
+    branches:
       - "NA"
       - "JP"
   schedule:
@@ -24,14 +24,13 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.12"]
-        branch: ["NA", "JP"]
 
     steps:
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ matrix.branch }}
+          ref: JP
 
       # Cache pip dependencies
       - name: Cache pip
@@ -56,12 +55,7 @@ jobs:
         run: pip install -r requirements.txt
 
       # Run the main script to parse APK
-      - name: Parse APK (NA)
-        if: matrix.branch == 'NA'
-        run: python main.py
-
-      - name: Parse APK (JP)
-        if: matrix.branch == 'JP'
+      - name: Parse APK
         run: python main.py
 
       # Commit and push changes
@@ -69,5 +63,5 @@ jobs:
         uses: actions-js/push@master
         with:
           force: true
-          branch: ${{ matrix.branch }}
+          branch: "JP"
           github_token: ${{ secrets.TOKEN_REPO }}
