@@ -5,13 +5,9 @@ name: Fate/Grand Order (JP) VerCode extractor
 
 on:
   push:
-    branches:
-      - "NA"
-      - "JP"
+    branch: [ "JP" ]
   pull_request:
-    branches:
-      - "NA"
-      - "JP"
+    branch: [ "JP" ]
   schedule:
     - cron: "15 04 * * *"
     - cron: "15 16 * * *"
@@ -29,8 +25,6 @@ jobs:
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: JP
 
       # Cache pip dependencies
       - name: Cache pip
