@@ -1,47 +1,38 @@
-# This workflow will install Python dependencies, run tests, and run a main script with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
-name: Fate/Grand Order (JP) VerCode extractor
+name: FGO版本码解析 - JP
 
 on:
   push:
-    branches: [ "JP" ]
+    branches: [JP]
   pull_request:
-    branches: [ "JP" ]
+    branches: [JP]
   schedule:
-    - cron: "15 04 * * *"
-    - cron: "15 16 * * *"
+    - cron: "00 03 * * *"
+    - cron: "30 03 * * *"
+    - cron: "00 07 * * *"
+    - cron: "30 13 * * *"
+    - cron: "30 17 * * *"
   workflow_dispatch:
 
 jobs:
   build:
-
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: ["3.12"]
+        python-version: [3.8]
 
     steps:
-      # Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
-      # Install requirements
-      - name: Install requirements
-        run: pip install -r requirements.txt
+      - name: 安装运行库
+        run: pip install -r https://raw.githubusercontent.com/DNNDHH/FGO-VerCode-extractor/JP/requirements.txt
 
-      # Run the main script to parse APK
-      - name: Parse APK
-        run: python main.py
+      - name: 获得库文件
+        uses: actions/checkout@v2
 
-      # Commit and push changes
-      - name: Push changes
+      - name: 解析APK
+        run: python3 main.py
+
+      - name: 提交更改
         uses: actions-js/push@master
         with:
           force: true
           branch: "JP"
           github_token: ${{ secrets.TOKEN_REPO }}
-          author_email: github-actions[bot]@users.noreply.github.com
-          author_name: github-actions[bot]
-          amend: false
-          directory: .
