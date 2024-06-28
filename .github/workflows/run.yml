@@ -25,15 +25,7 @@ jobs:
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: JP
-
-      # Set up Python
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-
+        
       # Install requirements
       - name: Install requirements
         run: pip install -r requirements.txt
