@@ -48,7 +48,6 @@ jobs:
         with:
           force: true
           branch: "JP"
-          github_token: ${{ secrets.TOKEN_REPO }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           author_email: github-actions[bot]@users.noreply.github.com
           author_name: github-actions[bot]
