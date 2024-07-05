@@ -16,12 +16,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@latest
+        uses: actions/checkout@master
         with:
           ref: NA
 
       - name: Cache Python dependencies
-        uses: actions/cache@latest
+        uses: actions/cache@master
         with:
           path: ~/.pip-cache
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'Pipfile.lock', 'pyproject.toml') }}
@@ -29,7 +29,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Set up Python
-        uses: actions/setup-python@latest
+        uses: actions/setup-python@master
         with:
           python-version: 3.11  # Specify your desired Python version
 
