@@ -7,9 +7,9 @@ on:
     - cron: "01 08 * * *"
     - cron: "01 16 * * *"
   push:
-    branches: [JP]
+    branches: ["JP"]
   pull_request:
-    branches: [JP]
+    branches: ["JP"]
   workflow_dispatch:
 
 jobs:
