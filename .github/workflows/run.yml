@@ -1,35 +1,37 @@
-name: Extracting VerCode - NA
+name: Code Extraction Workflow for NA Branch
 
 on:
   schedule:
-    - cron: "1 4 * * *"
-    - cron: "1 8 * * *"
-    - cron: "1 9 * * *"
-    - cron: "1 16 * * *"
+    - cron: "0 */1 * * *"  # Run every hour
   push:
-    branches: ["NA"]
+    branches:
+      - NA
   pull_request:
-    branches: ["NA"]
-  workflow_dispatch:
+    branches:
+      - NA
 
 jobs:
   build:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        python-version: ["3.11"]
+    runs-on: windows-latest  # Switch back to Windows environment
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@latest
+        with:
+          ref: NA
 
       - name: Cache Python dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@latest
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          path: ~/.pip-cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'Pipfile.lock', 'pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-pip-
+
+      - name: Set up Python
+        uses: actions/setup-python@latest
+        with:
+          python-version: 3.11  # Specify your desired Python version
 
       - name: Install Requirements
         run: |
@@ -38,7 +40,7 @@ jobs:
       - name: Execute main script
         run: python main.py
 
-      - name: Commit & push changes to branch NA
+      - name: Commit & push changes to branch JP
         uses: actions-js/push@master
         with:
           force: true
