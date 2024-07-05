@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: NA  # Specify the branch to check out
 
       - name: Cache Python dependencies
         uses: actions/cache@v2
@@ -39,7 +41,7 @@ jobs:
       - name: Execute main script
         run: python main.py
 
-      - name: Commit & push changes to branch JP
+      - name: Commit & push changes to branch NA
         uses: actions-js/push@master
         with:
           force: true
