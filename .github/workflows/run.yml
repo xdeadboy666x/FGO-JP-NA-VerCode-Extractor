@@ -22,8 +22,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: NA  # Specify the branch to check out
 
       - name: Cache Python dependencies
         uses: actions/cache@v2
