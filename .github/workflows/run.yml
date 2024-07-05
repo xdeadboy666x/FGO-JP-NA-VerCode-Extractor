@@ -3,8 +3,8 @@ name: Extracting VerCode - NA
 on:
   schedule:
     - cron: "01 04 * * *"
-    - cron: "01 05 * * *"
     - cron: "01 08 * * *"
+    - cron: "01 09 * * *"
     - cron: "01 16 * * *"
   push:
     branches: ["NA"]
