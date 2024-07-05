@@ -1,4 +1,4 @@
-name: Extracting VerCode - JP
+name: Extracting VerCode - NA
 
 on:
   schedule:
@@ -7,9 +7,9 @@ on:
     - cron: "01 08 * * *"
     - cron: "01 16 * * *"
   push:
-    branches: [JP]
+    branches: [NA]
   pull_request:
-    branches: [JP]
+    branches: [NA]
   workflow_dispatch:
 
 jobs:
@@ -43,5 +43,5 @@ jobs:
         uses: actions-js/push@master
         with:
           force: true
-          branch: "JP"
+          branch: "NA"
           github_token: ${{ secrets.TOKEN_REPO }}
