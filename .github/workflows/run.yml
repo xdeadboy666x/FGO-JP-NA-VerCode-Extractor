@@ -39,7 +39,7 @@ jobs:
       - name: Execute main script
         run: python main.py
 
-      - name: Commit & push changes to branch NA
+      - name: Commit & push changes to branch JP
         uses: actions-js/push@master
         with:
           force: true
