@@ -58,7 +58,7 @@ jobs:
 
       - name: Commit & push changes to branch
         if: github.ref == 'refs/heads/${{ github.event.inputs.branch }}'
-        uses: actions-js/push@v2
+        uses: actions-js/push@master
         with:
           force: true
           branch: ${{ github.ref }}
