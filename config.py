@@ -3,10 +3,10 @@ import requests
 import logging
 
 # URL for the APK file
-url_apk = "https://fgo.square.ovh/apk/com.aniplex.fategrandorder.apk"
+url_apk = "https://fgo.square.ovh/apk/com.aniplex.fategrandorder.en.apk"
 
 # URL for the version information
-url_version = "https://gplay-ver.atlasacademy.workers.dev/?id=com.aniplex.fategrandorder"
+url_version = "https://gplay-ver.atlasacademy.workers.dev/?id=com.aniplex.fategrandorder.en"
 
 # Temp folder for downloads
 temp_folder = os.path.join(os.getcwd(), "temp")
