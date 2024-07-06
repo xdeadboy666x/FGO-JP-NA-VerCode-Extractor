@@ -1,4 +1,4 @@
-name: Code Extraction Workflow for NA Branch
+name: Code Extraction Workflow
 
 on:
   workflow_dispatch:
@@ -6,9 +6,11 @@ on:
     - cron: "0 */1 * * *"  # Run every hour
   push:
     branches:
+      - JP
       - NA
   pull_request:
     branches:
+      - JP
       - NA
 
 jobs:
@@ -18,8 +20,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@master
-        with:
-          ref: NA
 
       - name: Cache Python dependencies
         uses: actions/cache@master
@@ -41,9 +41,9 @@ jobs:
       - name: Execute main script
         run: python main.py
 
-      - name: Commit & push changes to branch NA
+      - name: Commit & push changes to branch
         uses: actions-js/push@master
         with:
           force: true
-          branch: "NA"
+          branch: ${{ github.ref }}
           github_token: ${{ secrets.TOKEN_REPO }}
