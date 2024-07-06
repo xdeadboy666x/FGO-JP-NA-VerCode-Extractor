@@ -1,6 +1,7 @@
 name: Code Extraction Workflow for JP Branch
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 */1 * * *"  # Run every hour
   push:
@@ -17,8 +18,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@master
-        with:
-          ref: JP
 
       - name: Cache Python dependencies
         uses: actions/cache@master
@@ -40,7 +39,7 @@ jobs:
       - name: Execute main script
         run: python main.py
 
-      - name: Commit & push changes to branch JP
+      - name: Commit & push changes to branch NA
         uses: actions-js/push@master
         with:
           force: true
