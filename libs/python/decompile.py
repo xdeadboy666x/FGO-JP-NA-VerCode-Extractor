@@ -6,6 +6,9 @@ import config
 def decompile_apk():
     """
     Decompile the APK file using apktool.
+
+    This function uses the apktool.jar to decompile an APK file specified in
+    the configuration. The output is directed to a temporary folder.
     """
     apktool = os.path.join(os.getcwd(), "libs", "java", "apktool.jar")
     apk = os.path.join(config.temp_folder, "fate.apk")
@@ -19,11 +22,14 @@ def decompile_apk():
         )
         print('[App] Decompilation completed successfully!', file=sys.stdout)
     except subprocess.CalledProcessError as e:
-        print(f'[App] Decompilation failed: {e}', file=sys.stderr)
+        print(f'[Error] Decompilation failed: {e}', file=sys.stderr)
 
 def decrypt():
     """
     Decrypt the files using Il2CppDumper.
+
+    This function uses the Il2CppDumper executable to decrypt specific files.
+    The required input files and output directory are specified in the configuration.
     """
     il2cpp = os.path.join(os.getcwd(), "libs", "Il2CppDumper", "Il2CppDumper-x86.exe")
     global_metadata = os.path.join(config.temp_folder, "files", "assets", "bin", "Data", "Managed", "Metadata", "global-metadata.dat")
@@ -43,9 +49,9 @@ def decrypt():
         if p.returncode == 0:
             print('[App] Decryption completed successfully!', file=sys.stdout)
         else:
-            print(f'[App] Decryption failed: {stderr.decode()}', file=sys.stderr)
+            print(f'[Error] Decryption failed: {stderr.decode()}', file=sys.stderr)
     except Exception as e:
-        print(f'[App] Decryption encountered an error: {e}', file=sys.stderr)
+        print(f'[Error] Decryption encountered an unexpected error: {e}', file=sys.stderr)
 
 if __name__ == "__main__":
     decompile_apk()
