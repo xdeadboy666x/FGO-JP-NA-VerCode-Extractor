@@ -15,7 +15,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Switch back to Windows environment
+    runs-on: windows-latest  # Use the Windows environment
 
     steps:
       - name: Checkout repository
@@ -25,7 +25,7 @@ jobs:
         uses: actions/cache@master
         with:
           path: ~/.pip-cache
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'Pipfile.lock', 'pyproject.toml') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'Pipfile.lock', 'pyproject.toml') }}-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/Pipfile.lock') }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/.python-version') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
@@ -39,9 +39,11 @@ jobs:
           pip install -r requirements.txt
 
       - name: Execute main script
-        run: python main.py
+        run: |
+          python main.py
 
       - name: Commit & push changes to branch
+        if: startsWith(github.ref, 'refs/heads/${{ github.event.inputs.branch }}')
         uses: actions-js/push@master
         with:
           force: true
