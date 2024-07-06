@@ -19,18 +19,18 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
 
       - name: Cache Python dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@master
         with:
           path: ~/.pip-cache
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'Pipfile.lock', 'pyproject.toml') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'Pipfile.lock', 'pyproject.toml') }}-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/Pipfile.lock') }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/.python-version') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@master
         with:
           python-version: 3.11  # Specify your desired Python version
 
@@ -43,10 +43,10 @@ jobs:
         run: |
           if [ "${{ github.ref }}" = "refs/heads/JP" ]; then
             echo "Configuring for JP branch..."
-            cp config.py
+            cp configs/config_jp.py config.py
           elif [ "${{ github.ref }}" = "refs/heads/NA" ]; then
             echo "Configuring for NA branch..."
-            cp config.py
+            cp configs/config_na.py config.py
           else
             echo "Unsupported branch: ${{ github.ref }}"
             exit 1
@@ -57,7 +57,7 @@ jobs:
           python main.py
 
       - name: Commit & push changes to branch
-        if: github.ref == 'refs/heads/${{ github.event.inputs.branch }}'
+        if: startsWith(github.ref, 'refs/heads/${{ github.event.inputs.branch }}')
         uses: actions-js/push@master
         with:
           force: true
