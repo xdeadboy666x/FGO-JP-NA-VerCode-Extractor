@@ -39,16 +39,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Execute main script
+      - name: Configure Environment
         run: |
-          if [[ ${{ github.ref }} == "refs/heads/JP" ]]; then
-            python main.py --vercode JP
-          elif [[ ${{ github.ref }} == "refs/heads/NA" ]]; then
-            python main.py --vercode NA
+          if [ "${{ github.ref }}" = "refs/heads/JP" ]; then
+            echo "Configuring for JP branch..."
+            cp configs/config_jp.py config.py
+          elif [ "${{ github.ref }}" = "refs/heads/NA" ]; then
+            echo "Configuring for NA branch..."
+            cp configs/config_na.py config.py
           else
             echo "Unsupported branch: ${{ github.ref }}"
             exit 1
           fi
+
+      - name: Execute main script
+        run: |
+          python main.py
 
       - name: Commit & push changes to branch
         if: github.ref == 'refs/heads/${{ github.event.inputs.branch }}'
