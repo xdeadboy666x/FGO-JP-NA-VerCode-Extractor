@@ -30,7 +30,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Set up Python
-        uses: actions/setup-python@master
+        uses: actions/setup-python@v2
         with:
           python-version: 3.11  # Specify your desired Python version
 
@@ -38,19 +38,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Configure Environment
-        run: |
-          if [ "${{ github.ref }}" = "refs/heads/JP" ]; then
-            echo "Configuring for JP branch..."
-            cp configs/config_jp.py config.py
-          elif [ "${{ github.ref }}" = "refs/heads/NA" ]; then
-            echo "Configuring for NA branch..."
-            cp configs/config_na.py config.py
-          else
-            echo "Unsupported branch: ${{ github.ref }}"
-            exit 1
-          fi
 
       - name: Execute main script
         run: |
