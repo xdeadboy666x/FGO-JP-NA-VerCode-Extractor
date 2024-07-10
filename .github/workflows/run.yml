@@ -19,24 +19,24 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: Cache Python dependencies
-        uses: actions/cache@master
+        uses: actions/cache@v2
         with:
           path: ~/.pip-cache
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt', 'Pipfile.lock', 'pyproject.toml') }}-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/Pipfile.lock') }}-${{ hashFiles('**/pyproject.toml') }}-${{ hashFiles('**/.python-version') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
       - name: Set up Python
-        uses: actions/setup-python@master
+        uses: actions/setup-python@v2
         with:
           python-version: 3.11  # Specify your desired Python version
 
       - name: Install Requirements
         run: |
-          pip install -r requirements.txt
+          pip install --cache-dir ~/.pip-cache -r requirements.txt
 
       - name: Execute main script
         run: |
