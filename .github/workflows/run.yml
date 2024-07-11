@@ -5,11 +5,9 @@ on:
     - cron: "0 7,19 * * *"  # Run at 7:00 and 19:00
   push:
     branches:
-      - JP
       - NA
   pull_request:
     branches:
-      - JP
       - NA
   workflow_dispatch:
 
@@ -19,10 +17,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          ref: NA
 
       - name: Cache Python dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.pip-cache
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
@@ -30,7 +30,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.11  # Specify your desired Python version
 
@@ -43,9 +43,9 @@ jobs:
           python main.py
 
       - name: Commit & push changes to branch
-        if: startsWith(github.ref, 'refs/heads/${{ github.event.inputs.branch }}')
+        if: startsWith(github.ref, 'refs/heads/NA')
         uses: actions-js/push@master
         with:
           force: true
-          branch: ${{ github.ref }}
+          branch: NA
           github_token: ${{ secrets.TOKEN_REPO }}
