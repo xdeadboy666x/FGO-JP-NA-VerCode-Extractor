@@ -2,7 +2,8 @@ name: Code Extraction Workflow
 
 on:
   schedule:
-    - cron: "0 7,19 * * *"  # Run at 7:00 and 19:00
+    - cron: "0 07 * * *"
+    - cron: "0 19 * * *"
   push:
     branches:
       - JP
@@ -44,7 +45,7 @@ jobs:
 
       - name: Commit & push changes to branch
         if: startsWith(github.ref, 'refs/heads/JP')
-        uses: actions-js/push@master
+        uses: actions-js/push@v.0.6.0
         with:
           force: true
           branch: JP
