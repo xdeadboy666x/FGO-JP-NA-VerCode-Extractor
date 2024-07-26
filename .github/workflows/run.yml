@@ -45,7 +45,7 @@ jobs:
 
       - name: Commit & push changes to branch
         if: startsWith(github.ref, 'refs/heads/JP')
-        uses: actions-js/push@v.0.6.0
+        uses: actions-js/push@v0.6.0
         with:
           force: true
           branch: JP
