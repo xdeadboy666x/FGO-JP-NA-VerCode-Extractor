@@ -18,12 +18,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: JP
 
       - name: Cache Python dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.pip-cache
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-pip-
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.11  # Specify your desired Python version
 
@@ -45,7 +45,7 @@ jobs:
 
       - name: Commit & push changes to branch
         if: startsWith(github.ref, 'refs/heads/JP')
-        uses: actions-js/push@v0.6.0
+        uses: actions-js/push@master
         with:
           force: true
           branch: JP
