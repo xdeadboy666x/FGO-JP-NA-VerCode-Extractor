@@ -1,4 +1,4 @@
-name: Code Extraction Workflow
+name: Code Extraction Workflow NA
 
 on:
   schedule:
