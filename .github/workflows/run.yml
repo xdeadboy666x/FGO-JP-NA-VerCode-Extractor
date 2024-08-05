@@ -33,7 +33,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11  # Specify your desired Python version
+          python-version: 3.11
 
       - name: Install Requirements
         run: |
@@ -44,7 +44,6 @@ jobs:
           python main.py
 
       - name: Commit & push changes to branch
-        if: startsWith(github.ref, 'refs/heads/NA')
         uses: actions-js/push@master
         with:
           force: true
