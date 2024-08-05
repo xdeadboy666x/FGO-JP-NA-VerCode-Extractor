@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Use the Windows environment
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -33,7 +33,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: 3.11  # Specify your desired Python version
 
       - name: Install Requirements
         run: |
