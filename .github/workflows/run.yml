@@ -1,4 +1,4 @@
-name: Code Extraction Workflow
+name: Code Extraction Workflow JP
 
 on:
   schedule:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-latest  # Use the Windows environment
 
     steps:
       - name: Checkout repository
