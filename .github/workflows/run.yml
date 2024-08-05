@@ -44,15 +44,8 @@ jobs:
           python main.py
 
       - name: Commit & push changes to branch
-        if: always()
-        uses: actions/checkout@v4
+        uses: actions-js/push@master
         with:
-          ref: JP
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add .
-          git commit -m "Automated commit by GitHub Actions"
-          git push origin JP
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_REPO }}
+          force: true
+          branch: JP
+          github_token: ${{ secrets.TOKEN_REPO }}
