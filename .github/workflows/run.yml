@@ -2,8 +2,8 @@ name: Code Extraction Workflow JP
 
 on:
   schedule:
-    - cron: "0 07 * * *"
-    - cron: "0 19 * * *"
+    - cron: "00 07 * * *"
+    - cron: "00 19 * * *"
   push:
     branches:
       - JP
