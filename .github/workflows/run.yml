@@ -1,4 +1,4 @@
-name: Code Extraction Workflow NA
+name: Code Extraction Workflow
 
 on:
   schedule:
@@ -7,22 +7,24 @@ on:
   push:
     branches:
       - NA
+      - JP
   pull_request:
     branches:
       - NA
+      - JP
   workflow_dispatch:
 
 jobs:
-  build:
+  build-NA:
     runs-on: windows-latest  # Use the Windows environment
 
     steps:
-      - name: Checkout repository
+      - name: Checkout NA branch
         uses: actions/checkout@v4
         with:
           ref: NA
 
-      - name: Cache Python dependencies
+      - name: Cache Python dependencies for NA
         uses: actions/cache@v4
         with:
           path: ~/.pip-cache
@@ -30,22 +32,60 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Set up Python
+      - name: Set up Python for NA
         uses: actions/setup-python@v5
         with:
           python-version: 3.11  # Specify your desired Python version
 
-      - name: Install Requirements
+      - name: Install Requirements for NA
         run: |
           pip install --cache-dir ~/.pip-cache -r requirements.txt
 
-      - name: Execute main script
+      - name: Execute main script for NA
         run: |
           python main.py
 
-      - name: Commit & push changes to branch
+      - name: Commit & push changes to NA branch
         uses: actions-js/push@master
         with:
           force: true
           branch: NA
+          github_token: ${{ secrets.TOKEN_REPO }}
+
+  build-JP:
+    runs-on: windows-latest  # Use the Windows environment
+    needs: build-NA           # Ensure NA job completes before starting JP job
+
+    steps:
+      - name: Checkout JP branch
+        uses: actions/checkout@v4
+        with:
+          ref: JP
+
+      - name: Cache Python dependencies for JP
+        uses: actions/cache@v4
+        with:
+          path: ~/.pip-cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Set up Python for JP
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11  # Specify your desired Python version
+
+      - name: Install Requirements for JP
+        run: |
+          pip install --cache-dir ~/.pip-cache -r requirements.txt
+
+      - name: Execute main script for JP
+        run: |
+          python main.py
+
+      - name: Commit & push changes to JP branch
+        uses: actions-js/push@master
+        with:
+          force: true
+          branch: JP
           github_token: ${{ secrets.TOKEN_REPO }}
