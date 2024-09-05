@@ -39,12 +39,11 @@ jobs:
       - name: Set up Python for NA
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11  # Specify your desired Python version
-          cache: "pip"
+          python-version: "3.11"  # Specify your desired Python version
           
       - name: Install Requirements for NA
         run: |
-          pip install --cache-dir ~/.pip-cache -r requirements.txt
+          pip install --cache-dir ~/.pip-cache -r requirements.txt --user
 
       - name: Execute main script for NA
         run: python main.py
@@ -84,11 +83,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.11  # Specify your desired Python version
-          cache: "pip"
           
       - name: Install Requirements for JP
         run: |
-          pip install --cache-dir ~/.pip-cache -r requirements.txt
+          pip install --cache-dir ~/.pip-cache -r requirements.txt --user
 
       - name: Execute main script for JP
         run: python main.py
