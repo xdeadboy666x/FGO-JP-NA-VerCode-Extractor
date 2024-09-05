@@ -1,6 +1,7 @@
 name: Code Extraction Workflow
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "05 04 * * *"
     - cron: "05 09 * * *"
@@ -12,7 +13,6 @@ on:
     branches:
       - NA
       - JP
-  workflow_dispatch:
 
 jobs:
   build-NA:
@@ -36,25 +36,27 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.11  # Specify your desired Python version
-
+          cache: "pip"
+          
       - name: Install Requirements for NA
         run: |
-          pip install --cache-dir ~/.pip-cache -r requirements.txt --user
+          pip install --cache-dir ~/.pip-cache -r requirements.txt
 
       - name: Execute main script for NA
-        run: |
-          python main.py
+        run: python main.py
 
       - name: Commit & push changes to NA branch
-        uses: actions-js/push@master
-        with:
-          force: true
-          branch: NA
-          github_token: ${{ secrets.TOKEN_REPO }}
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Automated commit for NA branch"
+          git push origin NA
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_REPO }}
 
   build-JP:
     runs-on: windows-latest  # Use the Windows environment
-    needs: build-NA           # Ensure NA job completes before starting JP job
 
     steps:
       - name: Checkout JP branch
@@ -74,18 +76,21 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.11  # Specify your desired Python version
-
+          cache: "pip"
+          
       - name: Install Requirements for JP
         run: |
-          pip install --cache-dir ~/.pip-cache -r requirements.txt --user
+          pip install --cache-dir ~/.pip-cache -r requirements.txt
 
       - name: Execute main script for JP
-        run: |
-          python main.py
+        run: python main.py
 
       - name: Commit & push changes to JP branch
-        uses: actions-js/push@master
-        with:
-          force: true
-          branch: JP
-          github_token: ${{ secrets.TOKEN_REPO }}
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Automated commit for JP branch"
+          git push origin JP
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_REPO }}
