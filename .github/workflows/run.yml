@@ -24,6 +24,10 @@ jobs:
         with:
           ref: NA
 
+      - name: Create pip cache directory if it doesn't exist
+        run: |
+          mkdir -p ~/.pip-cache
+
       - name: Cache Python dependencies for NA
         uses: actions/cache@v4
         with:
@@ -63,6 +67,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: JP
+
+      - name: Create pip cache directory if it doesn't exist
+        run: |
+          mkdir -p ~/.pip-cache
 
       - name: Cache Python dependencies for JP
         uses: actions/cache@v4
