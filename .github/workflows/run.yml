@@ -1,4 +1,4 @@
-name: Code Extraction Workflow
+name: Fate Grand Order VerCode Extraction
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ on:
 
 jobs:
   build-NA:
-    runs-on: windows-latest  # Use the Windows environment
+    runs-on: windows-latest
 
     steps:
       - name: Checkout NA branch
@@ -24,7 +24,7 @@ jobs:
         with:
           ref: NA
 
-      - name: Create pip cache directory if it doesn't exist
+      - name: Create pip cache directory if none exists
         run: |
           mkdir -p ~/.pip-cache
 
@@ -39,13 +39,13 @@ jobs:
       - name: Set up Python for NA
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"  # Specify your desired Python version
+          python-version: "3.11"
           
       - name: Install Requirements for NA
         run: |
           pip install --cache-dir ~/.pip-cache -r requirements.txt --user
 
-      - name: Execute main script for NA
+      - name: Execute NA script
         run: python main.py
 
       - name: Commit & push changes to NA branch
@@ -59,7 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_REPO }}
 
   build-JP:
-    runs-on: windows-latest  # Use the Windows environment
+    runs-on: windows-latest
 
     steps:
       - name: Checkout JP branch
@@ -67,7 +67,7 @@ jobs:
         with:
           ref: JP
 
-      - name: Create pip cache directory if it doesn't exist
+      - name: Create pip cache directory if none exists
         run: |
           mkdir -p ~/.pip-cache
 
@@ -82,7 +82,7 @@ jobs:
       - name: Set up Python for JP
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11  # Specify your desired Python version
+          python-version: "3.11"
           
       - name: Install Requirements for JP
         run: |
