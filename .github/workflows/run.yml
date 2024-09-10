@@ -28,19 +28,12 @@ jobs:
         run: |
           mkdir -p ~/.pip-cache
 
-      - name: Cache Python dependencies for NA
-        uses: actions/cache@v4
-        with:
-          path: ~/.pip-cache
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
       - name: Set up Python for NA
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          
+          cache: "pip"
+
       - name: Install Requirements for NA
         run: |
           pip install --cache-dir ~/.pip-cache -r requirements.txt --user
@@ -71,19 +64,12 @@ jobs:
         run: |
           mkdir -p ~/.pip-cache
 
-      - name: Cache Python dependencies for JP
-        uses: actions/cache@v4
-        with:
-          path: ~/.pip-cache
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
       - name: Set up Python for JP
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          
+          cache: "pip"
+
       - name: Install Requirements for JP
         run: |
           pip install --cache-dir ~/.pip-cache -r requirements.txt --user
