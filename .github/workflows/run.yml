@@ -26,7 +26,16 @@ jobs:
       
       - name: Create pip cache directory if none exists
         run: |
-          mkdir -p ~/.pip-cache
+          if not exist "%LocalAppData%\pip\cache" mkdir "%LocalAppData%\pip\cache"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~\AppData\Local\pip\cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: Set up Python for NA
         uses: actions/setup-python@v5
@@ -36,7 +45,7 @@ jobs:
 
       - name: Install Requirements for NA
         run: |
-          pip install --cache-dir ~/.pip-cache -r requirements.txt --user
+          pip install --cache-dir %LocalAppData%\pip\cache -r requirements.txt --user
 
       - name: Execute NA script
         run: python main.py
@@ -62,7 +71,16 @@ jobs:
 
       - name: Create pip cache directory if none exists
         run: |
-          mkdir -p ~/.pip-cache
+          if not exist "%LocalAppData%\pip\cache" mkdir "%LocalAppData%\pip\cache"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~\AppData\Local\pip\cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: Set up Python for JP
         uses: actions/setup-python@v5
@@ -72,7 +90,7 @@ jobs:
 
       - name: Install Requirements for JP
         run: |
-          pip install --cache-dir ~/.pip-cache -r requirements.txt --user
+          pip install --cache-dir %LocalAppData%\pip\cache -r requirements.txt --user
 
       - name: Execute main script for JP
         run: python main.py
