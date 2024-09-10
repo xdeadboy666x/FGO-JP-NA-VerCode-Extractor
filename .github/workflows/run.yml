@@ -24,10 +24,6 @@ jobs:
         with:
           ref: NA
 
-      - name: Create pip cache directory if none exists
-        run: |
-          mkdir -p ~/.pip-cache
-
       - name: Set up Python for NA
         uses: actions/setup-python@v5
         with:
