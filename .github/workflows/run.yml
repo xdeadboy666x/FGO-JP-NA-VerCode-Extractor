@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "05 04 * * *"
+    - cron: "05 05 * * *"
     - cron: "05 09 * * *"
+    - cron: "05 10 * * *"
   push:
     branches:
       - NA
@@ -43,7 +45,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
 
       - name: Install Requirements for NA
         run: |
@@ -90,7 +91,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
 
       - name: Install Requirements for JP
         run: |
