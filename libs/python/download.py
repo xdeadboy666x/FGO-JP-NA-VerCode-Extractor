@@ -1,33 +1,21 @@
 import os
-import sys
-import requests
+import httpx
 import config
+from libs.python.logger import logger
 
 def download_latest():
-    """
-    Download the latest APK file from the specified URL and save it to the temp folder.
-    """
-    try:
-        print('[App] Creating folders...', file=sys.stdout)
-        os.makedirs(os.path.join(config.temp_folder, "decrypt"), exist_ok=True)
+    logger.info('Creating folder...')
 
-        print('[App] Downloading latest APK...', file=sys.stdout)
-        apk_path = os.path.join(config.temp_folder, "fate.apk")
+    os.mkdir(config.temp_folder)
+    os.mkdir(os.path.join(config.temp_folder, "decrypt"))
 
-        # Download and save the APK file
-        response = requests.get(config.url_apk)
-        response.raise_for_status()  # Raise an error for bad status codes
+    logger.info('Downloading latest apk...!')
+    
+    with httpx.stream("GET", config.url_apk, follow_redirects=True) as response:
+        response.raise_for_status()
 
-        with open(apk_path, "wb") as apk_file:
-            apk_file.write(response.content)
+        with open(os.path.join(config.temp_folder, config.apk_name), "wb") as file:
+            for chunk in response.iter_bytes():
+                file.write(chunk)
 
-        print('[App] APK downloaded successfully!', file=sys.stdout)
-    except requests.RequestException as e:
-        print(f'[Error] Failed to download APK: {e}', file=sys.stderr)
-    except OSError as e:
-        print(f'[Error] Failed to create folders or save APK: {e}', file=sys.stderr)
-    except Exception as e:
-        print(f'[Error] An unexpected error occurred: {e}', file=sys.stderr)
-
-if __name__ == "__main__":
-    download_latest()
+    logger.info('Apk downloaded!')
