@@ -107,5 +107,4 @@ jobs:
           git commit -m "Automated commit for JP branch"
           git push origin JP
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_REPO }}
- "         
+          GITHUB_TOKEN: ${{ secrets.TOKEN_REPO }}"
