@@ -11,4 +11,4 @@ if check_update():
     decrypt()
     write_verCode_data();
 else:
-   logger.info("No export needed, the latest version is already exported.")
+    logger.info("No export needed, the latest version is already exported.")
