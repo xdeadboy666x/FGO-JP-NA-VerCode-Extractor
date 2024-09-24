@@ -53,15 +53,12 @@ jobs:
       - name: Execute NA script
         run: python main.py
 
-      - name: Commit & push changes to NA branch
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add .
-          git commit -m "Automated commit for NA branch"
-          git push origin NA
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_REPO }}
+      - name: Commit & push changes to branch NA
+        uses: actions-js/push@master
+        with:
+          force: true
+          branch: "NA"
+          github_token: ${{ secrets.TOKEN_REPO }}
 
   build-JP:
     runs-on: windows-latest
@@ -99,15 +96,12 @@ jobs:
       - name: Execute JP script
         run: python main.py
 
-      - name: Commit & push changes to JP branch
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add .
-          git commit -m "Automated commit for JP branch"
-          git push origin JP
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_REPO }}
+      - name: Commit & push changes to branch JP
+        uses: actions-js/push@master
+        with:
+          force: true
+          branch: "JP"
+          github_token: ${{ secrets.TOKEN_REPO }}
 
   keepalive-job:
     name: Keepalive Workflow
