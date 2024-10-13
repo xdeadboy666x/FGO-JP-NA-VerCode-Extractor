@@ -3,14 +3,15 @@ import httpx
 import config
 from libs.python.logger import logger
 
+
 def download_latest():
-    logger.info('Creating folder...')
+    logger.info("Creating folder...")
 
     os.mkdir(config.temp_folder)
     os.mkdir(os.path.join(config.temp_folder, "decrypt"))
 
-    logger.info('Downloading latest apk...!')
-    
+    logger.info("Downloading latest apk...!")
+
     with httpx.stream("GET", config.url_apk, follow_redirects=True) as response:
         response.raise_for_status()
 
@@ -18,4 +19,4 @@ def download_latest():
             for chunk in response.iter_bytes():
                 file.write(chunk)
 
-    logger.info('Apk downloaded!')
+    logger.info("Apk downloaded!")
