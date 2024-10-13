@@ -9,6 +9,6 @@ if check_update():
     download_latest()
     decompile_apk()
     decrypt()
-    write_verCode_data();
+    write_verCode_data()
 else:
     logger.info("No export needed, the latest version is already exported.")
