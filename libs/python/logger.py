@@ -1,5 +1,5 @@
 import logging
-
+ 
 logging.basicConfig(
     filemode="w",
     filename="run.log",
@@ -7,5 +7,5 @@ logging.basicConfig(
     datefmt="%Y-%m-%dT%H:%M:%S%z",
     level=logging.INFO,
 )
-
+ 
 logger = logging.getLogger("VerCode (Extractor)")
