@@ -1,7 +1,7 @@
 name: Fate Grand Order VerCode Extraction
 
 on:
-  workflow_dispatch:
+  ##workflow_dispatch:
   schedule:
     - cron: "05 04 * * *"
     - cron: "05 05 * * *"
