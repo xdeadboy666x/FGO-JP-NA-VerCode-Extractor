@@ -19,17 +19,17 @@ jobs:
           - na
         include:
          - region: na
-           game: https://fgo.bigcereal.com/apk/com.aniplex.fategrandorder.en.xapk
+           game: https://static.atlasacademy.io/apk/com.aniplex.fategrandorder.en.combined.xapk
            version: https://gplay-ver.atlasacademy.workers.dev/?id=com.aniplex.fategrandorder.en
          - region: jp
-           game: https://fgo.bigcereal.com/apk/com.aniplex.fategrandorder.xapk
+           game: https://static.atlasacademy.io/apk/com.aniplex.fategrandorder.combined.xapk
            version: https://gplay-ver.atlasacademy.workers.dev/?id=com.aniplex.fategrandorder
     permissions:
       packages: write
       contents: write
     steps:
       - name: Gettings files from Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         
       - name: Set Game Version
         run: |
@@ -41,10 +41,10 @@ jobs:
           $appVersion = (Get-Content -Path "${{ matrix.region }}.json" | ConvertFrom-Json).appVer
           $envVersion = $env:VERSION
           if ($appVersion -eq $envVersion) {
-            echo "Versions match! No need to update the code. ✅"
+            echo "Up to date."
             echo "UPDATE=false" | Out-File -Append -FilePath $env:GITHUB_ENV  # Establece UPDATE como false
           } else {
-            echo "Versions don't match. Please update the code. 🔄"
+            echo "Update needed. 🔄"
             echo "UPDATE=true" | Out-File -Append -FilePath $env:GITHUB_ENV  # Establece UPDATE como true
           }
           
