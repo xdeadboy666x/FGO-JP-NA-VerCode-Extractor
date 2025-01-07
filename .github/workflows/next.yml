@@ -2,8 +2,10 @@ name: Extracting VerCode - Next
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 8 * * *'
-    - cron: '19 15 * * *'
+    - cron: "05 04 * * *"
+    - cron: "05 05 * * *"
+    - cron: "05 09 * * *"
+    - cron: "05 10 * * *"
   push:
     branches: [next]
 
