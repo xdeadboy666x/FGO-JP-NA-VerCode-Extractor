@@ -102,8 +102,8 @@ jobs:
   keepalive-job:
     name: Keepalive Workflow
     runs-on: ubuntu-latest
-     permissions:
+    permissions:
        actions: write
-     steps:
+    steps:
        - uses: actions/checkout@v4
-      - uses: gautamkrishnar/keepalive-workflow@v2
+       - uses: gautamkrishnar/keepalive-workflow@v2
