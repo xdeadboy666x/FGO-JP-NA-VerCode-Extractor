@@ -1,6 +1,8 @@
 import os
 
-url_apk = "https://static.atlasacademy.io/apk/com.aniplex.fategrandorder.en.combined.xapk"
+url_apk = (
+    "https://static.atlasacademy.io/apk/com.aniplex.fategrandorder.en.combined.xapk"
+)
 
 url_version = (
     "https://gplay-ver.atlasacademy.workers.dev/?id=com.aniplex.fategrandorder.en"
