@@ -2,14 +2,31 @@ name: Extract VerCode - Next
 on:  
   workflow_dispatch:  
   schedule:  
-    - cron: '16 09 * * *'  
-    - cron: '16 10 * * *'  
+    - cron: '16 09 * * *'
+    - cron: '16 10 * * *'
+    - cron: '16 11 * * *'
+    - cron: '16 12 * * *'
+    - cron: '16 13 * * *'
+    - cron: '16 14 * * *'
     - cron: '16 15 * * *'  
-    - cron: '16 16 * * *'  
+    - cron: '16 16 * * *'
+    - cron: '16 17 * * *'
+    - cron: '16 18 * * *'
+    - cron: '16 19 * * *'
+    - cron: '16 20 * * *'
     - cron: '16 21 * * *'  
-    - cron: '16 22 * * *'  
+    - cron: '16 22 * * *'
+    - cron: '16 23 * * *'
+    - cron: '16 00 * * *'
+    - cron: '16 01 * * *'
+    - cron: '16 02 * * *'
     - cron: '16 03 * * *'  
-    - cron: '16 04 * * *'  
+    - cron: '16 04 * * *'
+    - cron: '16 05 * * *'
+    - cron: '16 06 * * *'
+    - cron: '16 07* * *'
+    - cron: '16 08 * * *'
+
 
   push:  
     branches: master  
