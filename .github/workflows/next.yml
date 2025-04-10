@@ -102,8 +102,7 @@ jobs:
 
       - name: Extract verCode from APK  
         if: env.UPDATE == 'true'  
-        run: |  
-          java -jar fgo-vce.jar -g files/assets/bin/Data/Managed/Metadata/global-metadata.dat -av ${{ env.VERSION }} -o ${{ matrix.region }}.json  
+        run: wget -O fgo-vce.jar "https://github.com/O-Isaac/FGO-VCE/releases/download/v1.0.51-beta/FGO-VCE-1.0-SNAPSHOT-jar-with-dependencies.jar"  
 
       - name: Set Current Timestamp  
         if: env.UPDATE == 'true'  
