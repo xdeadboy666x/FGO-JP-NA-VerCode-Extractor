@@ -1,4 +1,4 @@
-name: Extracting VerCode - Next on:
+name: Fate Grand Order VerCode extractor tool
 
 on:
   workflow_dispatch:
