@@ -56,30 +56,30 @@ jobs:
               echo "UPDATE=true" >> $GITHUB_ENV
           fi
 
-      - name: Set up JDK
+      - name: Set up Java Development Kit (JDK)
         if: env.UPDATE == 'true'
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
           
-      - name: Download Edit Tools
+      - name: Download FGO Version Comparison Tool
         if: env.UPDATE == 'true'
         run: wget -O fgo-vce.jar "https://github.com/O-Isaac/FGO-VCE/releases/download/v1.0.51-beta/FGO-VCE-1.0-SNAPSHOT-jar-with-dependencies.jar"
 
-      - name: Download Game APK
+      - name: Download Latest JP Game APK
         if: env.UPDATE == 'true'
         run: wget -O fate.xapk "https://fgo.bigcereal.com/apk/com.aniplex.fategrandorder.xapk"
      
-      - name: Extract verCode from APK
+      - name: Extract Version Code from JP APK
         if: env.UPDATE == 'true'
         run: java -jar fgo-vce.jar -av ${{ env.VERSION }} -o jp.json -xa fate.xapk
       
-      - name: Set Current Date
+      - name: Set Current UTC Date for Commit
         if: env.UPDATE == 'true'
         run: echo "DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
 
-      - name: Upload verCode
+      - name: Commit Updated JP Version Code
         if: env.UPDATE == 'true'
         uses: EndBug/add-and-commit@v9
         with:
@@ -98,51 +98,25 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Dependencies
+      - name: Install JSON Parser (jq)
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Set Game Version
+      - name: Fetch Latest NA Game Version from Google Play
         run: |
           VERSION=$(curl -s "https://gplay-ver.atlasacademy.workers.dev/?id=com.aniplex.fategrandorder.en")
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Compare Version with na.json
-        run: |
-          APP_VERSION=$(jq -r '.appVer' "na.json")
-          if [ "$APP_VERSION" == "$VERSION" ]; then
-              echo "UPDATE=false" >> $GITHUB_ENV
-          else
-              echo "UPDATE=true" >> $GITHUB_ENV
-          fi
+      - name: Compare NA Version with Stored Value
+  run: |
+    echo "Reading version from na.json..."
+    NA_VERSION=$(jq -r '.appVer' na.json)
 
-      - name: Set up JDK
-        if: env.UPDATE == 'true'
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-          
-      - name: Download Edit Tools
-        if: env.UPDATE == 'true'
-        run: wget -O fgo-vce.jar "https://github.com/O-Isaac/FGO-VCE/releases/download/v1.0.51-beta/FGO-VCE-1.0-SNAPSHOT-jar-with-dependencies.jar"
+    echo "Comparing NA version ($NA_VERSION) with current version ($VERSION)..."
+    if [ "$NA_VERSION" = "$VERSION" ]; then
+      echo "Versions match. No update needed."
+      echo "UPDATE=false" >> "$GITHUB_ENV"
+    else
+      echo "Versions differ. Update required."
+      echo "UPDATE=true" >> "$GITHUB_ENV"
+    fi
 
-      - name: Download Game APK
-        if: env.UPDATE == 'true'
-        run: wget -O fate.xapk "https://fgo.bigcereal.com/apk/com.aniplex.fategrandorder.en.xapk"
-     
-      - name: Extract verCode from APK
-        if: env.UPDATE == 'true'
-        run: java -jar fgo-vce.jar -av ${{ env.VERSION }} -o na.json -xa fate.xapk
-      
-      - name: Set Current Date
-        if: env.UPDATE == 'true'
-        run: echo "DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
-
-      - name: Upload verCode
-        if: env.UPDATE == 'true'
-        uses: EndBug/add-and-commit@v9
-        with:
-          pull: '--rebase --autostash'
-          add: 'na.json'
-          default_author: github_actions
-          message: '✨ Update for NA - Commit on ${{ env.DATE }} 🚀'
