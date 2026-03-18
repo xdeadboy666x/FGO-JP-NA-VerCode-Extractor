@@ -37,9 +37,23 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Fetch Latest ${{ matrix.region }} Game Version
-        run: |
-          VERSION=$(curl -s "https://gplay-ver.atlasacademy.workers.dev/?id=${{ matrix.id }}" | jq -r '.version')
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+  run: |
+    RESPONSE=$(curl -s --fail "https://gplay-ver.atlasacademy.workers.dev/?id=${{ matrix.id }}")
+
+    if [ -z "$RESPONSE" ]; then
+      echo "Empty response from API"
+      exit 1
+    fi
+
+    VERSION=$(echo "$RESPONSE" | jq -r '.version // empty')
+
+    if [ -z "$VERSION" ]; then
+      echo "Invalid JSON or missing version field"
+      echo "Response was: $RESPONSE"
+      exit 1
+    fi
+
+    echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Compare with Stored ${{ matrix.region }} Version
         run: |
