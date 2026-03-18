@@ -38,22 +38,22 @@ jobs:
 
       - name: Fetch Latest ${{ matrix.region }} Game Version
         run: |
-    RESPONSE=$(curl -s --fail "https://gplay-ver.atlasacademy.workers.dev/?id=${{ matrix.id }}")
+          RESPONSE=$(curl -s --fail --retry 3 --retry-delay 2 "https://gplay-ver.atlasacademy.workers.dev/?id=${{ matrix.id }}")
 
-    if [ -z "$RESPONSE" ]; then
-      echo "Empty response from API"
-      exit 1
-    fi
+          if [ -z "$RESPONSE" ]; then
+            echo "Empty response from API"
+            exit 1
+          fi
 
-    VERSION=$(echo "$RESPONSE" | jq -r '.version // empty')
+          VERSION=$(echo "$RESPONSE" | jq -r '.version // empty')
 
-    if [ -z "$VERSION" ]; then
-      echo "Invalid JSON or missing version field"
-      echo "Response was: $RESPONSE"
-      exit 1
-    fi
+          if [ -z "$VERSION" ]; then
+            echo "Invalid JSON or missing version field"
+            echo "Response was: $RESPONSE"
+            exit 1
+          fi
 
-    echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Compare with Stored ${{ matrix.region }} Version
         run: |
@@ -86,7 +86,7 @@ jobs:
 
       - name: Extract ${{ matrix.region }} verCode
         if: env.UPDATE == 'true'
-        run: java -jar fgo-vce.jar -av $VERSION -o ${{ matrix.file }} -xa fate.xapk
+        run: java -jar fgo-vce.jar -av "$VERSION" -o ${{ matrix.file }} -xa fate.xapk
 
       - name: Set Commit Timestamp
         if: env.UPDATE == 'true'
