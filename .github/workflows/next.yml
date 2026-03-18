@@ -37,7 +37,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Fetch Latest ${{ matrix.region }} Game Version
-  run: |
+        run: |
     RESPONSE=$(curl -s --fail "https://gplay-ver.atlasacademy.workers.dev/?id=${{ matrix.id }}")
 
     if [ -z "$RESPONSE" ]; then
