@@ -28,7 +28,7 @@ on:
     - cron: '16 07 * * *'
     - cron: '16 08 * * *'
   push:
-    branches: [next]
+    branches: [master]
 
 jobs:
   jp:
