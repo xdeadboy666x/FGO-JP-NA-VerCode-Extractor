@@ -2,10 +2,14 @@ name: Fate Grand Order VerCode extractor tool
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
   schedule:
     - cron: '30 * * * *'
-  push:
-    branches: [master]
 
 jobs:
   jp:
