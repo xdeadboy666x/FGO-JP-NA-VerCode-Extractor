@@ -59,7 +59,7 @@ jobs:
 
       - name: Commit JP verCode Update
         if: env.UPDATE == 'true'
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           pull: '--rebase --autostash'
           add: 'jp.json'
@@ -118,7 +118,7 @@ jobs:
 
       - name: Commit NA verCode Update
         if: env.UPDATE == 'true'
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v10
         with:
           pull: '--rebase --autostash'
           add: 'na.json'
